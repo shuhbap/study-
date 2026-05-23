@@ -13,7 +13,7 @@ export default function Navbar() {
 
   const [open, setOpen] = useState(false);
 
-  // LOCK BODY SCROLL
+  // BODY SCROLL LOCK
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -74,32 +74,34 @@ export default function Navbar() {
           >
 
             {/* LOGO */}
-            <Link href="/">
-              <div className="flex items-center gap-3 cursor-pointer">
+            <Link
+              href="/"
+              className="flex items-center gap-3 cursor-pointer"
+            >
 
-                <img
-                  src="/logo.jpg"
-                  alt="logo"
-                  className="
-                  h-11 w-11
-                  rounded-full
-                  object-cover
-                  border border-yellow-500/30
-                  shadow-md
-                  "
-                />
+              <img
+                src="/logo.jpg"
+                alt="logo"
+                className="
+                h-11 w-11
+                rounded-full
+                object-cover
+                border border-yellow-500/30
+                shadow-md
+                "
+              />
 
-                <h1
-                  className="
-                  tamooh-logo
-                  text-2xl md:text-3xl
-                  font-semibold
-                  text-yellow-600
-                  "
-                >
-                  TAMOOH
-                </h1>
-              </div>
+              <h1
+                className="
+                tamooh-logo
+                text-2xl md:text-3xl
+                font-semibold
+                text-yellow-600
+                "
+              >
+                TAMOOH
+              </h1>
+
             </Link>
 
             {/* DESKTOP MENU */}
@@ -154,45 +156,42 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
 
               {/* CART */}
-              <Link href="/cart">
+              <Link
+                href="/cart"
+                className="
+                group relative
+                flex h-12 w-12
+                items-center justify-center
+                overflow-hidden
+                rounded-full
+                border border-yellow-500/20
+                bg-gradient-to-b from-white to-yellow-50
+                shadow-[0_5px_20px_rgba(212,175,55,0.18)]
+                transition duration-300
+                hover:scale-105
+                "
+              >
 
-                <button
+                <ShoppingBag
+                  size={20}
                   className="
-                  group relative
-                  flex h-12 w-12
-                  items-center justify-center
-                  overflow-hidden
-                  rounded-full
-                  border border-yellow-500/20
-                  bg-gradient-to-b from-white to-yellow-50
-                  shadow-[0_5px_20px_rgba(212,175,55,0.18)]
-                  transition duration-300
-                  hover:scale-105
+                  relative z-10
+                  text-yellow-600
+                  transition
+                  group-hover:scale-110
                   "
-                >
+                />
 
-                  <ShoppingBag
-                    size={20}
-                    className="
-                    relative z-10
-                    text-yellow-600
-                    transition
-                    group-hover:scale-110
-                    "
-                  />
-
-                  <div
-                    className="
-                    absolute inset-0
-                    bg-yellow-400/10
-                    blur-xl
-                    opacity-0
-                    transition
-                    group-hover:opacity-100
-                    "
-                  />
-
-                </button>
+                <div
+                  className="
+                  absolute inset-0
+                  bg-yellow-400/10
+                  blur-xl
+                  opacity-0
+                  transition
+                  group-hover:opacity-100
+                  "
+                />
 
               </Link>
 
@@ -253,8 +252,8 @@ export default function Navbar() {
 
           ${
             open
-              ? "opacity-100 visible"
-              : "opacity-0 invisible"
+              ? "opacity-100 visible pointer-events-auto"
+              : "opacity-0 invisible pointer-events-none"
           }
         `}
       >
@@ -365,28 +364,25 @@ export default function Navbar() {
           </a>
 
           {/* OPEN CART */}
-          <Link href="/cart">
-
-            <button
-              onClick={() => setOpen(false)}
-              className="
-              mt-4
-              rounded-full
-              bg-[#D4AF37]
-              px-8 py-4
-              text-lg text-white
-              shadow-[0_10px_30px_rgba(212,175,55,0.30)]
-              transition duration-300
-              hover:scale-105
-              "
-            >
-              Open Cart
-            </button>
-
+          <Link
+            href="/cart"
+            onClick={() => setOpen(false)}
+            className="
+            mt-4
+            rounded-full
+            bg-[#D4AF37]
+            px-8 py-4
+            text-lg text-white
+            shadow-[0_10px_30px_rgba(212,175,55,0.30)]
+            transition duration-300
+            hover:scale-105
+            "
+          >
+            Open Cart
           </Link>
 
         </div>
       </div>
     </>
   );
-            }
+}
