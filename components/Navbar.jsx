@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+
 import {
   Menu,
   X,
@@ -55,6 +56,7 @@ export default function Navbar() {
       {/* NAVBAR */}
       <nav className="fixed top-0 left-0 w-full z-50">
         <div className="mx-auto max-w-7xl px-5 md:px-10">
+
           <div
             className="
             mt-4 flex items-center justify-between
@@ -72,8 +74,9 @@ export default function Navbar() {
                   src="/logo.jpg"
                   alt="logo"
                   className="
-                  h-11 w-11 rounded-full object-cover
-                  border border-yellow-500/40 shadow-md
+                  h-11 w-11 rounded-full
+                  object-cover border
+                  border-yellow-500/40 shadow-md
                   "
                 />
 
@@ -138,7 +141,8 @@ export default function Navbar() {
               <Link href="/cart">
                 <button
                   className="
-                  group relative flex h-12 w-12 items-center justify-center
+                  group relative flex h-12 w-12
+                  items-center justify-center
                   rounded-full border border-yellow-500/30
                   bg-gradient-to-b from-white to-yellow-50
                   shadow-[0_5px_20px_rgba(212,175,55,0.18)]
@@ -169,7 +173,8 @@ export default function Navbar() {
               <button
                 onClick={() => setOpen(true)}
                 className="
-                md:hidden group relative flex h-12 w-12 items-center justify-center
+                md:hidden group relative
+                flex h-12 w-12 items-center justify-center
                 rounded-full border border-yellow-500/30
                 bg-gradient-to-b from-white to-yellow-50
                 shadow-[0_5px_20px_rgba(212,175,55,0.18)]
@@ -223,7 +228,7 @@ export default function Navbar() {
           />
         </button>
 
-        {/* MENU CONTENT */}
+        {/* MENU */}
         <div
           onClick={(e) => e.stopPropagation()}
           className="flex flex-col items-center gap-8"
@@ -289,15 +294,13 @@ export default function Navbar() {
             Contact
           </a>
 
-          {/* CART LINK */}
+          {/* CART BUTTON */}
           <Link href="/cart">
             <button
               onClick={() => setOpen(false)}
               className="
-              mt-4 rounded-full
-              bg-[#D4AF37]
-              px-8 py-4
-              text-lg text-white
+              mt-4 rounded-full bg-[#D4AF37]
+              px-8 py-4 text-lg text-white
               shadow-[0_10px_30px_rgba(212,175,55,0.30)]
               transition hover:scale-105
               "
@@ -305,8 +308,9 @@ export default function Navbar() {
               Open Cart
             </button>
           </Link>
+
         </div>
       </div>
     </>
   );
-            }
+                }
