@@ -17,6 +17,7 @@ import {
 import { useState } from "react";
 
 import Navbar from "../../components/Navbar";
+import Loader from "../components/Loader";
 
 export default function ProductPage() {
   const [qty, setQty] = useState(1);
