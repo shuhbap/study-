@@ -1,0 +1,14 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  background:#FAF7F2;
+  color:#111;
+  font-family:Arial, sans-serif;
+}
+
+.gold-btn{
+  @apply bg-[#D4AF37] text-white px-6 py-3 rounded-full transition hover:scale-105;
+}
