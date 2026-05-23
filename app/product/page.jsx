@@ -16,7 +16,7 @@ import {
 
 import { useState } from "react";
 import Navbar from "../../components/Navbar";
-import { useCart } from "@/context/CartContext";
+import { useCart } from "../../context/CartContext";
 
 export default function ProductPage() {
   const [qty, setQty] = useState(1);
