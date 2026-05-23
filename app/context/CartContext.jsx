@@ -9,8 +9,8 @@ export function CartProvider({ children }) {
 
   // LOAD FROM LOCALSTORAGE
   useEffect(() => {
-    const stored = localStorage.getItem("cart");
-    if (stored) setCart(JSON.parse(stored));
+    const saved = localStorage.getItem("cart");
+    if (saved) setCart(JSON.parse(saved));
   }, []);
 
   // SAVE TO LOCALSTORAGE
@@ -18,12 +18,12 @@ export function CartProvider({ children }) {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  // ADD ITEM
+  // ADD TO CART
   const addToCart = (product) => {
     setCart((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
+      const exists = prev.find((item) => item.id === product.id);
 
-      if (existing) {
+      if (exists) {
         return prev.map((item) =>
           item.id === product.id
             ? { ...item, qty: item.qty + (product.qty || 1) }
@@ -65,7 +65,6 @@ export function CartProvider({ children }) {
   );
 }
 
-// SAFE HOOK (prevents crash)
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
