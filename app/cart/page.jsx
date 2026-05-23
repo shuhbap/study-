@@ -2,90 +2,90 @@
 
 import Image from "next/image";
 import Navbar from "../../components/Navbar";
+import { useState } from "react";
 import { useCart } from "../../context/CartContext";
 
 import {
+  Star,
   Minus,
   Plus,
-  Trash2,
-  ArrowRight,
+  ShoppingCart,
+  Truck,
+  ShieldCheck,
 } from "lucide-react";
 
-export default function CartPage() {
-  const { cart, removeFromCart, updateQty } = useCart();
+export default function ProductPage() {
+  const [qty, setQty] = useState(1);
+  const { addToCart } = useCart();
 
-  const subtotal = cart.reduce(
-    (acc, item) => acc + item.price * item.qty,
-    0
-  );
+  const price = 199;
+  const total = price * qty;
 
   return (
-    <main className="min-h-screen bg-[#FAF7F2] pt-24 px-6">
+    <main className="min-h-screen bg-[#FAF7F2]">
       <Navbar />
 
-      <div className="max-w-5xl mx-auto">
+      <section className="pt-28 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 px-6">
 
-        <h1 className="text-4xl font-bold mb-10">
-          Cart
-        </h1>
+        {/* IMAGE */}
+        <div>
+          <Image
+            src="/9D2F3332-C688-4224-83F8-94CAE44E9F91.png"
+            alt="product"
+            width={500}
+            height={500}
+          />
+        </div>
 
-        {cart.length === 0 ? (
-          <p>Cart is empty</p>
-        ) : (
-          cart.map((item) => (
-            <div
-              key={item.id}
-              className="flex items-center gap-4 bg-white p-4 rounded-2xl mb-4"
-            >
-              <Image
-                src={item.image}
-                width={80}
-                height={80}
-                alt=""
-              />
+        {/* DETAILS */}
+        <div>
 
-              <div className="flex-1">
-                <h2>{item.name}</h2>
+          <h1 className="text-4xl font-bold">
+            Instant Biriyani Masala
+          </h1>
 
-                <div className="flex items-center gap-3 mt-2">
+          <p className="mt-2 text-gray-600">
+            Premium luxury spice blend
+          </p>
 
-                  <button
-                    onClick={() =>
-                      updateQty(item.id, item.qty - 1)
-                    }
-                  >
-                    <Minus />
-                  </button>
+          {/* PRICE */}
+          <h2 className="text-3xl mt-6 text-yellow-600 font-bold">
+            ₹{total}
+          </h2>
 
-                  <span>{item.qty}</span>
+          {/* QTY */}
+          <div className="flex items-center gap-4 mt-6">
+            <button onClick={() => setQty(q => q > 1 ? q - 1 : 1)}>
+              <Minus />
+            </button>
 
-                  <button
-                    onClick={() =>
-                      updateQty(item.id, item.qty + 1)
-                    }
-                  >
-                    <Plus />
-                  </button>
+            <span>{qty}</span>
 
-                </div>
-              </div>
+            <button onClick={() => setQty(q => q + 1)}>
+              <Plus />
+            </button>
+          </div>
 
-              <p>₹{item.price * item.qty}</p>
+          {/* ADD TO CART */}
+          <button
+            onClick={() =>
+              addToCart({
+                id: "masala-1",
+                name: "Biriyani Masala",
+                price,
+                qty,
+                image: "/9D2F3332-C688-4224-83F8-94CAE44E9F91.png",
+              })
+            }
+            className="mt-8 bg-[#D4AF37] text-white px-8 py-3 rounded-full flex items-center gap-2"
+          >
+            <ShoppingCart />
+            Add To Cart
+          </button>
 
-              <button
-                onClick={() => removeFromCart(item.id)}
-              >
-                <Trash2 />
-              </button>
-            </div>
-          ))
-        )}
+        </div>
 
-        <h2 className="text-2xl mt-10">
-          Total: ₹{subtotal}
-        </h2>
-
-      </div>
+      </section>
     </main>
   );
 }
