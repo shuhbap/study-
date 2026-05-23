@@ -1,11 +1,22 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
+
+  // LOAD FROM LOCALSTORAGE
+  useEffect(() => {
+    const stored = localStorage.getItem("cart");
+    if (stored) setCart(JSON.parse(stored));
+  }, []);
+
+  // SAVE TO LOCALSTORAGE
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   // ADD ITEM
   const addToCart = (product) => {
@@ -15,12 +26,12 @@ export function CartProvider({ children }) {
       if (existing) {
         return prev.map((item) =>
           item.id === product.id
-            ? { ...item, qty: item.qty + 1 }
+            ? { ...item, qty: item.qty + (product.qty || 1) }
             : item
         );
       }
 
-      return [...prev, { ...product, qty: 1 }];
+      return [...prev, { ...product, qty: product.qty || 1 }];
     });
   };
 
@@ -29,8 +40,10 @@ export function CartProvider({ children }) {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // QTY UPDATE
+  // UPDATE QTY
   const updateQty = (id, qty) => {
+    if (qty < 1) return;
+
     setCart((prev) =>
       prev.map((item) =>
         item.id === id ? { ...item, qty } : item
@@ -42,7 +55,6 @@ export function CartProvider({ children }) {
     <CartContext.Provider
       value={{
         cart,
-        setCart,
         addToCart,
         removeFromCart,
         updateQty,
@@ -53,4 +65,11 @@ export function CartProvider({ children }) {
   );
 }
 
-export const useCart = () => useContext(CartContext);
+// SAFE HOOK (prevents crash)
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used inside CartProvider");
+  }
+  return context;
+};
