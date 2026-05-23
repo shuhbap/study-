@@ -1,33 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import Image from "next/image";
-import Link from "next/link";
-
 import {
   Minus,
   Plus,
   Trash2,
   ArrowRight,
   MapPin,
-  Menu,
-  X,
   ShieldCheck,
 } from "lucide-react";
 
 export default function Cart() {
   const [qty, setQty] = useState(1);
-
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  // PRICE
-  const productPrice = 199;
-
-  // SHIPPING LOCATION
   const [location, setLocation] = useState("Kerala");
 
-  // SHIPPING RATE
+  const productPrice = 199;
+
   const shippingRates = {
     Kerala: 40,
     TamilNadu: 60,
@@ -39,39 +28,34 @@ export default function Cart() {
     shippingRates[location] || shippingRates.Default;
 
   const subtotal = productPrice * qty;
-
   const total = subtotal + shipping;
 
   // LOAD RAZORPAY
   useEffect(() => {
     const script = document.createElement("script");
-
-    script.src =
-      "https://checkout.razorpay.com/v1/checkout.js";
-
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
-
     document.body.appendChild(script);
   }, []);
 
   // PAYMENT
-  const handlePayment = async () => {
+  const handlePayment = () => {
+    if (!window.Razorpay) {
+      alert("Payment system loading...");
+      return;
+    }
+
     const options = {
-      key: "RAZORPAY_KEY_ID", // replace with your key
-
+      key: "RAZORPAY_KEY_ID", // replace
       amount: total * 100,
-
       currency: "INR",
-
       name: "TAMOOH",
-
-      description: "Premium Biriyani Masala",
-
+      description: "Premium Biriyani Masala Order",
       image: "/logo.jpg",
 
       handler: function (response) {
         alert(
-          `Payment Successful\nPayment ID: ${response.razorpay_payment_id}`
+          `Order Successful 🎉\nPayment ID: ${response.razorpay_payment_id}`
         );
       },
 
@@ -87,654 +71,172 @@ export default function Cart() {
     };
 
     const rzp = new window.Razorpay(options);
-
     rzp.open();
   };
 
   return (
-    <main className="min-h-screen bg-[#FAF7F2]">
-      {/* NAVBAR */}
-      <header
-        className="
-        fixed top-0 left-0 z-50
-        w-full
-        border-b border-yellow-500/10
-        bg-white/70
-        backdrop-blur-xl
-        "
-      >
-        <div
-          className="
-          max-w-7xl mx-auto
-          px-4 md:px-8
-          h-[78px]
-          flex items-center justify-between
-          "
-        >
-          {/* LOGO */}
-          <Link href="/">
-            <h1
-              className="
-              text-2xl md:text-3xl
-              font-semibold
-              tracking-wide
-              text-yellow-700
-              "
-            >
-              TAMOOH
-            </h1>
-          </Link>
+    <main className="min-h-screen bg-[#FAF7F2] pt-24 px-4 md:px-8 pb-16">
 
-          {/* DESKTOP MENU */}
-          <div className="hidden md:flex items-center gap-10">
-            <Link
-              href="/"
-              className="text-neutral-700 hover:text-yellow-700 transition"
-            >
-              Home
-            </Link>
+      <div className="max-w-6xl mx-auto">
 
-            <Link
-              href="/shop"
-              className="text-neutral-700 hover:text-yellow-700 transition"
-            >
-              Shop
-            </Link>
+        {/* HEADER */}
+        <div className="mb-10">
+          <p className="text-yellow-600 tracking-[4px] uppercase text-xs">
+            Premium Checkout
+          </p>
 
-            <Link
-              href="/about"
-              className="text-neutral-700 hover:text-yellow-700 transition"
-            >
-              About
-            </Link>
-
-            <Link
-              href="/contact"
-              className="text-neutral-700 hover:text-yellow-700 transition"
-            >
-              Contact
-            </Link>
-          </div>
-
-          {/* MOBILE MENU BUTTON */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="
-            md:hidden
-            flex items-center justify-center
-            h-11 w-11
-            rounded-full
-            border border-yellow-500/20
-            bg-white
-            "
-          >
-            {menuOpen ? (
-              <X
-                size={20}
-                className="text-yellow-700"
-              />
-            ) : (
-              <Menu
-                size={20}
-                className="text-yellow-700"
-              />
-            )}
-          </button>
+          <h1 className="text-3xl md:text-5xl font-semibold mt-2">
+            Your Cart
+          </h1>
         </div>
 
-        {/* MOBILE MENU */}
-        {menuOpen && (
-          <div
-            className="
-            md:hidden
-            border-t border-yellow-500/10
-            bg-white
-            px-6 py-6
-            space-y-5
-            "
-          >
-            <Link
-              href="/"
-              className="block text-neutral-700"
-            >
-              Home
-            </Link>
+        {/* GRID */}
+        <div className="grid lg:grid-cols-[1.4fr_0.6fr] gap-8">
 
-            <Link
-              href="/shop"
-              className="block text-neutral-700"
-            >
-              Shop
-            </Link>
+          {/* LEFT - PRODUCT */}
+          <div className="space-y-6">
 
-            <Link
-              href="/about"
-              className="block text-neutral-700"
-            >
-              About
-            </Link>
+            <div className="rounded-[30px] bg-white/70 backdrop-blur-xl border border-yellow-500/10 shadow-lg p-5 md:p-7">
 
-            <Link
-              href="/contact"
-              className="block text-neutral-700"
-            >
-              Contact
-            </Link>
-          </div>
-        )}
-      </header>
+              <div className="flex flex-col md:flex-row gap-6">
 
-      {/* MAIN */}
-      <section className="pt-28 pb-14 px-3 md:px-8">
-        <div className="max-w-7xl mx-auto">
-          {/* TOP */}
-          <div className="mb-8 md:mb-12">
-            <p
-              className="
-              text-yellow-600
-              tracking-[3px]
-              uppercase
-              text-xs md:text-sm
-              "
-            >
-              Premium Checkout
-            </p>
+                {/* IMAGE */}
+                <div className="relative w-full md:w-[200px] h-[200px] rounded-2xl overflow-hidden bg-[#f8f3e8]">
+                  <Image
+                    src="/9D2F3332-C688-4224-83F8-94CAE44E9F91.png"
+                    alt="product"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
 
-            <h1
-              className="
-              text-3xl md:text-5xl
-              font-semibold
-              text-neutral-900
-              mt-2
-              "
-            >
-              Your Cart
-            </h1>
-          </div>
+                {/* DETAILS */}
+                <div className="flex-1">
 
-          {/* GRID */}
-          <div className="grid lg:grid-cols-[1.4fr_0.75fr] gap-6">
-            {/* LEFT */}
-            <div className="space-y-5">
-              {/* CART ITEM */}
-              <div
-                className="
-                rounded-[30px]
-                border border-yellow-500/20
-                bg-white/80
-                backdrop-blur-xl
-                p-4 md:p-6
-                shadow-[0_10px_40px_rgba(212,175,55,0.08)]
-                "
-              >
-                <div className="flex flex-col sm:flex-row gap-5">
-                  {/* IMAGE */}
-                  <div
-                    className="
-                    relative
-                    w-full
-                    sm:w-[170px]
-                    h-[190px]
-                    sm:h-[170px]
-                    overflow-hidden
-                    rounded-[22px]
-                    bg-[#f7f3ea]
-                    "
-                  >
-                    <Image
-                      src="/logo.jpg"
-                      alt="product"
-                      fill
-                      className="object-cover"
-                    />
+                  <div className="flex justify-between">
+                    <div>
+                      <p className="text-yellow-600 text-xs tracking-[3px] uppercase">
+                        Tamooh Signature
+                      </p>
+
+                      <h2 className="text-2xl md:text-3xl font-semibold mt-1">
+                        Instant Biriyani Masala
+                      </h2>
+
+                      <p className="text-neutral-500 mt-3 text-sm md:text-base">
+                        Premium spice blend for royal biriyani experience.
+                      </p>
+                    </div>
+
+                    <button className="h-10 w-10 flex items-center justify-center rounded-full border border-red-200 hover:bg-red-50">
+                      <Trash2 size={16} className="text-red-500" />
+                    </button>
                   </div>
 
-                  {/* DETAILS */}
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p
-                          className="
-                          text-yellow-600
-                          tracking-[2px]
-                          uppercase
-                          text-[10px] md:text-xs
-                          "
-                        >
-                          Tamooh Signature
-                        </p>
+                  {/* QTY + PRICE */}
+                  <div className="flex items-center justify-between mt-8">
 
-                        <h2
-                          className="
-                          text-2xl md:text-3xl
-                          font-semibold
-                          mt-1
-                          "
-                        >
-                          Instant Biriyani Masala
-                        </h2>
+                    {/* QTY */}
+                    <div className="flex items-center gap-4 border border-yellow-500/20 px-4 py-2 rounded-full">
+                      <button onClick={() => setQty(q => q > 1 ? q - 1 : 1)}>
+                        <Minus size={16} className="text-yellow-700" />
+                      </button>
 
-                        <p
-                          className="
-                          mt-3
-                          text-sm md:text-base
-                          text-neutral-500
-                          leading-relaxed
-                          max-w-lg
-                          "
-                        >
-                          Crafted with premium spices and rich aroma
-                          for a luxury dining experience.
-                        </p>
-                      </div>
+                      <span className="font-medium">{qty}</span>
 
-                      {/* DELETE */}
-                      <button
-                        className="
-                        flex h-10 w-10 items-center justify-center
-                        rounded-full border border-red-200
-                        hover:bg-red-50 transition
-                        "
-                      >
-                        <Trash2
-                          size={16}
-                          className="text-red-500"
-                        />
+                      <button onClick={() => setQty(q => q + 1)}>
+                        <Plus size={16} className="text-yellow-700" />
                       </button>
                     </div>
 
-                    {/* BOTTOM */}
-                    <div
-                      className="
-                      mt-7
-                      flex flex-col sm:flex-row
-                      sm:items-center sm:justify-between
-                      gap-5
-                      "
-                    >
-                      {/* QUANTITY */}
-                      <div
-                        className="
-                        flex items-center gap-4
-                        rounded-full
-                        border border-yellow-500/20
-                        px-4 py-2
-                        w-fit
-                        "
-                      >
-                        <button
-                          onClick={() =>
-                            setQty((prev) =>
-                              prev > 1 ? prev - 1 : 1
-                            )
-                          }
-                        >
-                          <Minus
-                            size={16}
-                            className="text-yellow-700"
-                          />
-                        </button>
-
-                        <span className="font-medium text-base">
-                          {qty}
-                        </span>
-
-                        <button
-                          onClick={() =>
-                            setQty((prev) => prev + 1)
-                          }
-                        >
-                          <Plus
-                            size={16}
-                            className="text-yellow-700"
-                          />
-                        </button>
-                      </div>
-
-                      {/* PRICE */}
-                      <div className="text-left sm:text-right">
-                        <p className="text-sm text-neutral-500">
-                          Total Price
-                        </p>
-
-                        <h3
-                          className="
-                          text-3xl
-                          font-semibold
-                          text-yellow-600
-                          mt-1
-                          "
-                        >
-                          ₹{subtotal}
-                        </h3>
-                      </div>
+                    {/* PRICE */}
+                    <div className="text-right">
+                      <p className="text-sm text-neutral-500">Subtotal</p>
+                      <h3 className="text-2xl font-semibold text-yellow-600">
+                        ₹{subtotal}
+                      </h3>
                     </div>
+
                   </div>
+
                 </div>
               </div>
+
             </div>
 
-            {/* RIGHT */}
-            <div
-              className="
-              h-fit
-              rounded-[30px]
-              border border-yellow-500/20
-              bg-white/80
-              backdrop-blur-xl
-              p-5 md:p-7
-              shadow-[0_10px_40px_rgba(212,175,55,0.08)]
-              sticky top-24
-              "
-            >
-              <p
-                className="
-                text-yellow-600
-                tracking-[3px]
-                uppercase
-                text-xs md:text-sm
-                "
-              >
-                Order Summary
-              </p>
-
-              <h2
-                className="
-                text-2xl md:text-3xl
-                font-semibold
-                mt-2
-                "
-              >
-                Checkout
-              </h2>
-
-              {/* PAYMENT APPS */}
-              <div className="mt-6">
-                <p className="text-sm text-neutral-500 mb-3">
-                  Secure Payments
-                </p>
-
-                <div
-                  className="
-                  flex flex-wrap items-center gap-3
-                  rounded-2xl
-                  border border-yellow-500/20
-                  bg-[#faf7f2]
-                  p-4
-                  "
-                >
-                  {/* VISA */}
-                  <div
-                    className="
-                    flex items-center justify-center
-                    h-14 w-14
-                    rounded-xl
-                    bg-white
-                    border border-yellow-500/10
-                    shadow-sm
-                    "
-                  >
-                    <Image
-                      src="/payments/IMG_2402.jpeg"
-                      alt="Visa"
-                      width={38}
-                      height={38}
-                      className="object-contain"
-                    />
-                  </div>
-
-                  {/* MASTERCARD */}
-                  <div
-                    className="
-                    flex items-center justify-center
-                    h-14 w-14
-                    rounded-xl
-                    bg-white
-                    border border-yellow-500/10
-                    shadow-sm
-                    "
-                  >
-                    <Image
-                      src="/payments/IMG_2403.jpeg"
-                      alt="Mastercard"
-                      width={38}
-                      height={38}
-                      className="object-contain"
-                    />
-                  </div>
-
-                  {/* GPAY */}
-                  <div
-                    className="
-                    flex items-center justify-center
-                    h-14 w-14
-                    rounded-xl
-                    bg-white
-                    border border-yellow-500/10
-                    shadow-sm
-                    "
-                  >
-                    <Image
-                      src="/payments/IMG_2400.png"
-                      alt="Google Pay"
-                      width={38}
-                      height={38}
-                      className="object-contain"
-                    />
-                  </div>
-
-                  {/* PHONEPE */}
-                  <div
-                    className="
-                    flex items-center justify-center
-                    h-14 w-14
-                    rounded-xl
-                    bg-white
-                    border border-yellow-500/10
-                    shadow-sm
-                    "
-                  >
-                    <Image
-                      src="/payments/IMG_2406.jpeg"
-                      alt="PhonePe"
-                      width={38}
-                      height={38}
-                      className="object-contain"
-                    />
-                  </div>
-
-                  {/* PAYTM */}
-                  <div
-                    className="
-                    flex items-center justify-center
-                    h-14 w-14
-                    rounded-xl
-                    bg-white
-                    border border-yellow-500/10
-                    shadow-sm
-                    "
-                  >
-                    <Image
-                      src="/payments/IMG_2405.jpeg"
-                      alt="Paytm"
-                      width={38}
-                      height={38}
-                      className="object-contain"
-                    />
-                  </div>
-
-                  {/* UPI */}
-                  <div
-                    className="
-                    flex items-center justify-center
-                    h-14 w-14
-                    rounded-xl
-                    bg-white
-                    border border-yellow-500/10
-                    shadow-sm
-                    "
-                  >
-                    <Image
-                      src="/payments/IMG_2404.jpeg"
-                      alt="UPI"
-                      width={38}
-                      height={38}
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* LOCATION */}
-              <div className="mt-7">
-                <label
-                  className="
-                  text-sm
-                  text-neutral-500
-                  mb-2 block
-                  "
-                >
-                  Shipping Location
-                </label>
-
-                <div className="relative">
-                  <MapPin
-                    size={17}
-                    className="
-                    absolute
-                    left-4 top-1/2
-                    -translate-y-1/2
-                    text-yellow-700
-                    "
-                  />
-
-                  <select
-                    value={location}
-                    onChange={(e) =>
-                      setLocation(e.target.value)
-                    }
-                    className="
-                    w-full
-                    rounded-2xl
-                    border border-yellow-500/20
-                    bg-[#faf7f2]
-                    py-3 pl-11 pr-4
-                    outline-none
-                    text-sm
-                    "
-                  >
-                    <option value="Kerala">
-                      Kerala
-                    </option>
-
-                    <option value="TamilNadu">
-                      Tamil Nadu
-                    </option>
-
-                    <option value="Karnataka">
-                      Karnataka
-                    </option>
-
-                    <option value="Default">
-                      Other States
-                    </option>
-                  </select>
-                </div>
-              </div>
-
-              {/* SUMMARY */}
-              <div className="mt-8 space-y-4">
-                <div className="flex items-center justify-between">
-                  <p className="text-neutral-500 text-sm">
-                    Subtotal
-                  </p>
-
-                  <p className="font-medium">
-                    ₹{subtotal}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <p className="text-neutral-500 text-sm">
-                    Shipping
-                  </p>
-
-                  <p className="font-medium">
-                    ₹{shipping}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <p className="text-neutral-500 text-sm">
-                    Tax
-                  </p>
-
-                  <p className="font-medium">
-                    ₹0
-                  </p>
-                </div>
-
-                <div className="h-[1px] bg-yellow-100" />
-
-                <div className="flex items-center justify-between">
-                  <p className="text-lg font-medium">
-                    Total
-                  </p>
-
-                  <h3
-                    className="
-                    text-3xl
-                    font-semibold
-                    text-yellow-600
-                    "
-                  >
-                    ₹{total}
-                  </h3>
-                </div>
-              </div>
-
-              {/* PAYMENT BUTTON */}
-              <button
-                onClick={handlePayment}
-                className="
-                mt-8
-                flex w-full items-center justify-center gap-3
-                rounded-full
-                bg-[#D4AF37]
-                px-5 py-4
-                text-white
-                text-base md:text-lg
-                shadow-[0_10px_30px_rgba(212,175,55,0.35)]
-                transition duration-300
-                hover:scale-[1.01]
-                active:scale-[0.98]
-                "
-              >
-                Continue To Payment
-
-                <ArrowRight size={18} />
-              </button>
-
-              {/* SECURE */}
-              <div
-                className="
-                mt-5
-                flex items-center justify-center gap-2
-                text-xs md:text-sm
-                text-neutral-500
-                "
-              >
-                <ShieldCheck
-                  size={15}
-                  className="text-green-600"
-                />
-
-                Secure payment powered by Razorpay
-              </div>
-            </div>
           </div>
+
+          {/* RIGHT - SUMMARY */}
+          <div className="h-fit sticky top-24 rounded-[30px] bg-white/70 backdrop-blur-xl border border-yellow-500/10 shadow-lg p-6">
+
+            <h2 className="text-2xl font-semibold">Checkout</h2>
+
+            {/* LOCATION */}
+            <div className="mt-6">
+              <label className="text-sm text-neutral-500 mb-2 block">
+                Shipping Location
+              </label>
+
+              <div className="relative">
+                <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-yellow-600" />
+
+                <select
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className="w-full border border-yellow-500/20 rounded-xl pl-10 py-3 bg-[#faf7f2]"
+                >
+                  <option>Kerala</option>
+                  <option>TamilNadu</option>
+                  <option>Karnataka</option>
+                  <option>Default</option>
+                </select>
+              </div>
+            </div>
+
+            {/* SUMMARY */}
+            <div className="mt-6 space-y-3 text-sm">
+
+              <div className="flex justify-between">
+                <span>Subtotal</span>
+                <span>₹{subtotal}</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span>Shipping</span>
+                <span>₹{shipping}</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span>Tax</span>
+                <span>₹0</span>
+              </div>
+
+              <div className="border-t pt-3 flex justify-between font-semibold text-lg">
+                <span>Total</span>
+                <span className="text-yellow-600">₹{total}</span>
+              </div>
+
+            </div>
+
+            {/* PAYMENT */}
+            <button
+              onClick={handlePayment}
+              className="mt-7 w-full flex items-center justify-center gap-2 bg-[#D4AF37] text-white py-4 rounded-full shadow-lg hover:scale-[1.02] transition"
+            >
+              Pay Now
+              <ArrowRight size={18} />
+            </button>
+
+            {/* SECURE */}
+            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-neutral-500">
+              <ShieldCheck size={14} className="text-green-600" />
+              Secure payment powered by Razorpay
+            </div>
+
+          </div>
+
         </div>
-      </section>
+      </div>
     </main>
   );
 }
