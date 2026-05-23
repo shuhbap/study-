@@ -5,10 +5,9 @@ import Link from "next/link";
 
 import {
   ArrowRight,
-  Star,
-  ShieldCheck,
-  Truck,
   Sparkles,
+  ShoppingBag,
+  Star,
 } from "lucide-react";
 
 import Navbar from "../components/Navbar";
@@ -24,29 +23,47 @@ export default function Home() {
       {/* HERO */}
       <section
         className="
+        relative
         min-h-screen
         flex items-center
-        pt-28 pb-20
+        pt-28
+        pb-24
         px-4 md:px-8
         "
       >
+        {/* BG BLUR */}
+        <div
+          className="
+          absolute
+          top-20 right-0
+          h-[420px]
+          w-[420px]
+          rounded-full
+          bg-yellow-300/20
+          blur-3xl
+          "
+        />
+
         <div
           className="
           max-w-7xl mx-auto
           grid lg:grid-cols-2
-          gap-14
+          gap-16
           items-center
+          relative z-10
           "
         >
           {/* LEFT */}
           <div>
+            {/* BADGE */}
             <div
               className="
-              inline-flex items-center gap-2
+              inline-flex
+              items-center gap-2
               rounded-full
               border border-yellow-500/20
               bg-white/80
-              px-4 py-2
+              px-5 py-2
               text-sm
               text-yellow-700
               shadow-sm
@@ -57,97 +74,106 @@ export default function Home() {
               Premium Biriyani Experience
             </div>
 
+            {/* TITLE */}
             <h1
               className="
-              mt-6
+              mt-7
               text-5xl md:text-7xl
-              leading-tight
+              leading-[1.05]
               font-semibold
+              tracking-[-2px]
               "
+              style={{
+                fontFamily: "serif",
+              }}
             >
-              Luxury Taste
+              Our Story
               <br />
 
               <span className="text-[#D4AF37]">
-                In Every Spoon
+                Begins With
               </span>
+
+              <br />
+
+              Taste.
             </h1>
 
+            {/* DESC */}
             <p
               className="
-              mt-7
+              mt-8
               max-w-xl
-              text-neutral-600
               text-lg
               leading-relaxed
+              text-neutral-600
               "
             >
-              Crafted with premium spices and rich aroma,
-              TAMOOH delivers a royal biriyani experience
-              designed for modern luxury kitchens.
+              TAMOOH brings together authentic traditional
+              biriyani flavor with luxury presentation,
+              premium ingredients and unforgettable aroma.
             </p>
 
-            {/* BUTTONS */}
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link href="/cart">
+            {/* BUTTON */}
+            <div className="mt-10">
+              <Link href="#store">
                 <button
                   className="
-                  flex items-center gap-2
+                  group
+                  flex items-center gap-3
                   rounded-full
                   bg-[#D4AF37]
                   px-8 py-4
                   text-white
-                  shadow-[0_10px_30px_rgba(212,175,55,0.35)]
-                  transition hover:scale-[1.03]
+                  text-lg
+                  shadow-[0_15px_40px_rgba(212,175,55,0.35)]
+                  transition duration-300
+                  hover:scale-[1.03]
                   "
                 >
-                  Buy Now
+                  Explore Store
 
-                  <ArrowRight size={18} />
+                  <ArrowRight
+                    size={19}
+                    className="
+                    transition
+                    group-hover:translate-x-1
+                    "
+                  />
                 </button>
               </Link>
-
-              <button
-                className="
-                rounded-full
-                border border-yellow-500/20
-                bg-white
-                px-8 py-4
-                hover:border-yellow-600
-                transition
-                "
-              >
-                Explore Products
-              </button>
             </div>
 
             {/* FEATURES */}
-            <div className="mt-12 flex flex-wrap gap-6">
-              <div className="flex items-center gap-2 text-sm text-neutral-600">
-                <ShieldCheck
-                  size={18}
-                  className="text-green-600"
-                />
+            <div className="mt-14 flex flex-wrap gap-8">
+              <div>
+                <h3 className="text-3xl font-semibold text-[#D4AF37]">
+                  100%
+                </h3>
 
-                Premium Quality
+                <p className="text-neutral-500 text-sm mt-1">
+                  Premium Spices
+                </p>
               </div>
 
-              <div className="flex items-center gap-2 text-sm text-neutral-600">
-                <Truck
-                  size={18}
-                  className="text-yellow-700"
-                />
+              <div>
+                <h3 className="text-3xl font-semibold text-[#D4AF37]">
+                  24h
+                </h3>
 
-                Fast Delivery
+                <p className="text-neutral-500 text-sm mt-1">
+                  Fast Delivery
+                </p>
               </div>
 
-              <div className="flex items-center gap-2 text-sm text-neutral-600">
-                <Star
-                  size={18}
-                  className="text-yellow-500"
-                />
+              <div>
+                <h3 className="text-3xl font-semibold text-[#D4AF37]">
+                  5★
+                </h3>
 
-                Trusted Flavor
+                <p className="text-neutral-500 text-sm mt-1">
+                  Trusted Taste
+                </p>
               </div>
             </div>
           </div>
@@ -157,10 +183,10 @@ export default function Home() {
             <div
               className="
               absolute
-              h-[350px]
-              w-[350px]
+              h-[380px]
+              w-[380px]
               rounded-full
-              bg-yellow-300/20
+              bg-[#D4AF37]/20
               blur-3xl
               "
             />
@@ -168,64 +194,69 @@ export default function Home() {
             <div
               className="
               relative
-              rounded-[40px]
+              rounded-[45px]
               border border-yellow-500/10
               bg-white/70
-              p-5
-              shadow-[0_20px_60px_rgba(212,175,55,0.18)]
               backdrop-blur-xl
+              p-6
+              shadow-[0_20px_70px_rgba(212,175,55,0.18)]
               "
             >
               <Image
                 src="/9D2F3332-C688-4224-83F8-94CAE44E9F91.png"
                 alt="Tamooh Product"
-                width={520}
-                height={520}
+                width={550}
+                height={550}
+                priority
                 className="
                 object-contain
                 drop-shadow-2xl
                 "
-                priority
               />
             </div>
           </div>
         </div>
       </section>
 
-      {/* PRODUCT CATEGORIES */}
+      {/* STORE */}
       <section
-        id="products"
+        id="store"
         className="
         py-24
         px-4 md:px-8
         "
       >
         <div className="max-w-7xl mx-auto">
+          {/* TOP */}
           <div className="text-center mb-16">
             <p
               className="
-              text-yellow-600
               uppercase
               tracking-[4px]
+              text-yellow-600
               text-sm
               "
             >
-              Product Collection
+              Explore Products
             </p>
 
             <h2
               className="
-              mt-3
-              text-4xl md:text-5xl
+              mt-4
+              text-4xl md:text-6xl
               font-semibold
               "
+              style={{
+                fontFamily: "serif",
+              }}
             >
-              Choose Your Pack
+              Luxury Collections
             </h2>
           </div>
 
+          {/* PRODUCTS */}
           <div className="grid md:grid-cols-3 gap-8">
-            {/* SINGLE */}
+            {/* CARD 1 */}
             <div
               className="
               group
@@ -233,11 +264,13 @@ export default function Home() {
               border border-yellow-500/10
               bg-white/80
               p-6
+              backdrop-blur-xl
               shadow-[0_10px_40px_rgba(212,175,55,0.08)]
               transition duration-300
               hover:-translate-y-2
               "
             >
+              {/* IMAGE */}
               <div
                 className="
                 rounded-[30px]
@@ -249,19 +282,27 @@ export default function Home() {
                 <Image
                   src="/9D2F3332-C688-4224-83F8-94CAE44E9F91.png"
                   alt="Single Pack"
-                  width={230}
-                  height={230}
+                  width={240}
+                  height={240}
                   className="
                   object-contain
-                  transition
-                  duration-300
+                  transition duration-300
                   group-hover:scale-105
                   "
                 />
               </div>
 
+              {/* DETAILS */}
               <div className="mt-6">
-                <p className="text-yellow-600 text-sm tracking-[3px] uppercase">
+                <div className="flex items-center gap-1 text-yellow-500">
+                  <Star size={15} fill="currentColor" />
+                  <Star size={15} fill="currentColor" />
+                  <Star size={15} fill="currentColor" />
+                  <Star size={15} fill="currentColor" />
+                  <Star size={15} fill="currentColor" />
+                </div>
+
+                <p className="mt-4 text-yellow-600 tracking-[3px] uppercase text-xs">
                   Single Pack
                 </p>
 
@@ -270,28 +311,30 @@ export default function Home() {
                 </h3>
 
                 <p className="mt-3 text-neutral-600 leading-relaxed">
-                  Perfect for small families and personal use
-                  with premium authentic flavor.
+                  Perfect premium pack for daily luxury
+                  cooking and rich authentic flavor.
                 </p>
 
                 <button
                   className="
-                  mt-6
-                  w-full
+                  mt-7
+                  flex w-full items-center justify-center gap-2
                   rounded-full
                   bg-[#D4AF37]
                   py-4
                   text-white
-                  transition
+                  transition duration-300
                   hover:scale-[1.02]
                   "
                 >
-                  Buy Single Pack
+                  <ShoppingBag size={17} />
+
+                  Add To Cart
                 </button>
               </div>
             </div>
 
-            {/* BULK */}
+            {/* CARD 2 */}
             <div
               className="
               group
@@ -299,11 +342,13 @@ export default function Home() {
               border border-yellow-500/10
               bg-white/80
               p-6
+              backdrop-blur-xl
               shadow-[0_10px_40px_rgba(212,175,55,0.08)]
               transition duration-300
               hover:-translate-y-2
               "
             >
+              {/* IMAGE */}
               <div
                 className="
                 rounded-[30px]
@@ -315,19 +360,27 @@ export default function Home() {
                 <Image
                   src="/9D2F3332-C688-4224-83F8-94CAE44E9F91.png"
                   alt="Bulk Pack"
-                  width={230}
-                  height={230}
+                  width={240}
+                  height={240}
                   className="
                   object-contain
-                  transition
-                  duration-300
+                  transition duration-300
                   group-hover:scale-105
                   "
                 />
               </div>
 
+              {/* DETAILS */}
               <div className="mt-6">
-                <p className="text-yellow-600 text-sm tracking-[3px] uppercase">
+                <div className="flex items-center gap-1 text-yellow-500">
+                  <Star size={15} fill="currentColor" />
+                  <Star size={15} fill="currentColor" />
+                  <Star size={15} fill="currentColor" />
+                  <Star size={15} fill="currentColor" />
+                  <Star size={15} fill="currentColor" />
+                </div>
+
+                <p className="mt-4 text-yellow-600 tracking-[3px] uppercase text-xs">
                   Bulk Pack
                 </p>
 
@@ -336,28 +389,30 @@ export default function Home() {
                 </h3>
 
                 <p className="mt-3 text-neutral-600 leading-relaxed">
-                  Ideal for restaurants, catering and large
-                  scale premium cooking requirements.
+                  Designed for restaurants, catering and
+                  premium large-scale cooking experiences.
                 </p>
 
                 <button
                   className="
-                  mt-6
-                  w-full
+                  mt-7
+                  flex w-full items-center justify-center gap-2
                   rounded-full
                   bg-[#D4AF37]
                   py-4
                   text-white
-                  transition
+                  transition duration-300
                   hover:scale-[1.02]
                   "
                 >
-                  Buy Bulk Pack
+                  <ShoppingBag size={17} />
+
+                  Add To Cart
                 </button>
               </div>
             </div>
 
-            {/* OFFER */}
+            {/* CARD 3 */}
             <div
               className="
               group
@@ -365,11 +420,13 @@ export default function Home() {
               border border-yellow-500/10
               bg-white/80
               p-6
+              backdrop-blur-xl
               shadow-[0_10px_40px_rgba(212,175,55,0.08)]
               transition duration-300
               hover:-translate-y-2
               "
             >
+              {/* IMAGE */}
               <div
                 className="
                 relative
@@ -379,6 +436,7 @@ export default function Home() {
                 flex justify-center
                 "
               >
+                {/* OFFER BADGE */}
                 <div
                   className="
                   absolute top-4 right-4
@@ -395,19 +453,27 @@ export default function Home() {
                 <Image
                   src="/9D2F3332-C688-4224-83F8-94CAE44E9F91.png"
                   alt="Offer Pack"
-                  width={230}
-                  height={230}
+                  width={240}
+                  height={240}
                   className="
                   object-contain
-                  transition
-                  duration-300
+                  transition duration-300
                   group-hover:scale-105
                   "
                 />
               </div>
 
+              {/* DETAILS */}
               <div className="mt-6">
-                <p className="text-yellow-600 text-sm tracking-[3px] uppercase">
+                <div className="flex items-center gap-1 text-yellow-500">
+                  <Star size={15} fill="currentColor" />
+                  <Star size={15} fill="currentColor" />
+                  <Star size={15} fill="currentColor" />
+                  <Star size={15} fill="currentColor" />
+                  <Star size={15} fill="currentColor" />
+                </div>
+
+                <p className="mt-4 text-yellow-600 tracking-[3px] uppercase text-xs">
                   Offer Pack
                 </p>
 
@@ -416,126 +482,29 @@ export default function Home() {
                 </h3>
 
                 <p className="mt-3 text-neutral-600 leading-relaxed">
-                  Special combo offer with premium savings and
-                  exclusive festive packaging.
+                  Exclusive combo offer with luxury savings
+                  and premium festive packaging.
                 </p>
 
                 <button
                   className="
-                  mt-6
-                  w-full
+                  mt-7
+                  flex w-full items-center justify-center gap-2
                   rounded-full
                   bg-[#D4AF37]
                   py-4
                   text-white
-                  transition
+                  transition duration-300
                   hover:scale-[1.02]
                   "
                 >
-                  Grab Offer
+                  <ShoppingBag size={17} />
+
+                  Add To Cart
                 </button>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* STORY */}
-      <section
-        id="story"
-        className="
-        py-24
-        px-4 md:px-8
-        bg-white
-        "
-      >
-        <div className="max-w-5xl mx-auto text-center">
-          <p
-            className="
-            text-yellow-600
-            uppercase
-            tracking-[4px]
-            text-sm
-            "
-          >
-            Our Story
-          </p>
-
-          <h2
-            className="
-            mt-4
-            text-4xl md:text-5xl
-            font-semibold
-            "
-          >
-            Tradition Meets Luxury
-          </h2>
-
-          <p
-            className="
-            mt-8
-            text-lg
-            text-neutral-600
-            leading-relaxed
-            "
-          >
-            TAMOOH was created to redefine instant biriyani
-            experiences through premium spices, rich aroma,
-            elegant packaging and authentic traditional taste.
-          </p>
-        </div>
-      </section>
-
-      {/* CONTACT */}
-      <section
-        className="
-        py-24
-        px-4 md:px-8
-        "
-      >
-        <div
-          className="
-          max-w-5xl mx-auto
-          rounded-[40px]
-          bg-[#D4AF37]
-          p-10 md:p-16
-          text-center
-          text-white
-          "
-        >
-          <p className="uppercase tracking-[4px] text-sm">
-            Contact TAMOOH
-          </p>
-
-          <h2
-            className="
-            mt-4
-            text-4xl md:text-5xl
-            font-semibold
-            "
-          >
-            Let's Build Premium Taste
-          </h2>
-
-          <p className="mt-6 text-white/80 max-w-2xl mx-auto">
-            Connect with us for orders, distribution,
-            partnerships and premium biriyani experiences.
-          </p>
-
-          <button
-            className="
-            mt-10
-            rounded-full
-            bg-white
-            px-8 py-4
-            text-black
-            font-medium
-            transition
-            hover:scale-[1.03]
-            "
-          >
-            Contact Now
-          </button>
         </div>
       </section>
     </main>
